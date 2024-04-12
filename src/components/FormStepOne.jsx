@@ -3,6 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import { CiCalendar } from "react-icons/ci";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const FormStepOne = ({ onNext, formData, setFormData, addNewClient, clients }) => {
   const [showNewClientForm, setShowNewClientForm] = useState(false);
@@ -29,6 +30,30 @@ const FormStepOne = ({ onNext, formData, setFormData, addNewClient, clients }) =
     e.preventDefault();
     addNewClient(newClientName); 
     setShowNewClientForm(false);
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault()
+    const errors = {};
+    if (!formData.projectName) {
+      errors.projectName = "Project Name is required";
+    }
+    if (!formData.client) {
+      errors.client = "Client is required";
+    }
+    if (!formData.startDate) {
+      errors.startDate = "Start Date is required";
+    }
+    if (!formData.endDate) {
+      errors.endDate = "End Date is required";
+    }
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach((error) => {
+        toast.error(error);
+      });
+    } else {
+      onNext();
+    }
   };
 
 
@@ -153,7 +178,7 @@ const FormStepOne = ({ onNext, formData, setFormData, addNewClient, clients }) =
           </button>
           <button
             type="submit"
-            onClick={onNext}
+            onClick={handleNext}
             className="items-center justify-center bg-blue-500 text-white rounded-md h-[40px] px-7"
           >
             Next

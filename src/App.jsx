@@ -3,6 +3,8 @@ import FormStepOne from "./components/FormStepOne";
 import FormStepTwo from "./components/FormStepTwo";
 import FormStepThree from "./components/FormStepThree";
 import FormStepFour from "./components/FormStepFour";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 const App = () => {
@@ -45,6 +47,7 @@ const App = () => {
 
   return (
     <>
+    <ToastContainer position="top-center" autoClose={2000} />
       <div className="bg-white w-[500px] h-auto mx-auto my-[30px] rounded-xl shadow-xl relative">
         {currentPage === 1 && (
           <FormStepOne

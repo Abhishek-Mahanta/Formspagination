@@ -2,6 +2,7 @@ import React from "react";
 import { FaRupeeSign } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const FormStepTwo = ({ onNext, onPrev, formData, setFormData }) => {
   const handleChange = (e) => {
@@ -10,6 +11,30 @@ const FormStepTwo = ({ onNext, onPrev, formData, setFormData }) => {
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    const errors = {};
+    if (!formData.projectType) {
+      errors.projectType = "Project Type is required";
+    }
+    if (!formData.hourlyRate) {
+      errors.hourlyRate = "Project Hourly Rate is required";
+    }
+    if (!formData.budget) {
+      errors.budget = "Budget is required";
+    }
+    if (!formData.endDate) {
+      errors.endDate = "End Date is required";
+    }
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach((error) => {
+        toast.error(error);
+      });
+    } else {
+      onNext();
+    }
   };
 
   return (
@@ -139,7 +164,7 @@ const FormStepTwo = ({ onNext, onPrev, formData, setFormData }) => {
           </button>
           <button
             type="submit"
-            onClick={onNext}
+            onClick={handleNext}
             className="items-center justify-center bg-blue-500 text-white rounded-md h-[40px] px-7"
           >
             Next
